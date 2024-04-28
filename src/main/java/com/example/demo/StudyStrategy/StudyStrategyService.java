@@ -9,8 +9,11 @@ import java.util.List;
 public class  StudyStrategyService {
     @Autowired
     private StudyStrategyRepository studyStrategyRepository;
-
-    public List<StudyStrategy> getAllStudyStrategies() {
+    public StudyStrategy addStudyStrategy(StudyStrategy studyStrategy) {
+    return studyStrategyRepository.save(studyStrategy);
+}
+    public List<StudyStrategy> getStudyStrategies() {
         return studyStrategyRepository.findAll();
     }
+
 }
