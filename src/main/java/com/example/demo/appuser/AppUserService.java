@@ -33,11 +33,14 @@ public class AppUserService implements UserDetailsService {
                         new UsernameNotFoundException(
                                 String.format("user with email %s not found", email)));
     }
-public AppUser findByUsername(String username){
-        return AppUserRepository.findByUsername(username);
-    }
+    public UserDetails findByUsername(String username) throws UsernameNotFoundException{
+            return appUserRepository.findByUsername(username)
+                    .orElseThrow(() ->
+                            new UsernameNotFoundException(
+                                    String.format("user with username %s not found", username)));
+        }
     public boolean authenticate(String username, String password){
-        AppUser user = AppUserRepository.findByUsername(username);
+        AppUser user = appUserRepository.findByUsername(username).orElse(null);
         return user != null && bCryptPasswordEncoder.matches(password, user.getPassword());
     }
     public String signUpUser(AppUser appUser) {
