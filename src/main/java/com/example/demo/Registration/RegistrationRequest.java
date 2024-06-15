@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.annotation.Nullable;
+import javax.validation.constraints.Email;
+
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -12,7 +15,11 @@ import lombok.ToString;
 public class RegistrationRequest {
     private final String firstName;
     private final String lastname;
+    private final String username;
+    @Email
     private final String email;
     private final String password;
+    @Nullable
+    private final String role;
 
 }

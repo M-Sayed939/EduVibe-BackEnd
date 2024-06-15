@@ -1,6 +1,9 @@
 package com.example.demo.Registration;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RegistrationController {
 
+
     private final RegistrationService registrationService;
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
+    public ResponseEntity<String> register(@Validated @RequestBody RegistrationRequest request) {
+        return ResponseEntity.ok(registrationService.register(request));
     }
 
     @GetMapping(path = "confirm")

@@ -1,8 +1,10 @@
 package com.example.demo.Initializing;
 
-import com.example.demo.StudyStrategy.*;
+import com.example.demo.StudyStrategy.StudyStrategy;
+import com.example.demo.StudyStrategy.StudyStrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
