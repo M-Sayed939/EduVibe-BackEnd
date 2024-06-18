@@ -29,6 +29,7 @@ public class BookService {
         if (response.getStatusCode().is2xxSuccessful()) {
             BookApiResponse body = response.getBody();
             if (body != null && body.getItems() != null) {
+
                 return mapToBooks(body.getItems());
             }
         }

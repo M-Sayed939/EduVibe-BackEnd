@@ -13,5 +13,6 @@ public class VolumeInfo {
     private String description;
     private List<String> categories;
     private String publishedDate;
-
-}
+    private String previewLink;
+    private ImageLinks imageLinks;
+    }

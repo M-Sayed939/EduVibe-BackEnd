@@ -16,10 +16,10 @@ public class Course {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Book> books;
+//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+//    private List<Book> books;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<StudyStrategy> studyStrategies;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<StudyStrategy> studyStrategys;
 
 }

@@ -19,8 +19,8 @@ public class Book {
     private String genre;
     private String publishedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+//    @ManyToOne
+//    @JoinColumn(name = "course_id")
+//    private Course course;
 }
 
