@@ -1,8 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 123456
+    url: jdbc:postgresql://eduvibepostgresserver.postgres.database.azure.com:5432/EduVibeDatabase
+    username: postgres@eduvibepostgresserver
+    password: Ms12345678
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: 123456
 #    url: jdbc:postgresql://eduvibe-server.postgres.database.azure.com:5432/eduvibe-database
 #    username: inxbtxsybp
 #    password: 52eXnXBQS7a$KA$G
