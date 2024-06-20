@@ -1,5 +1,6 @@
 package com.example.demo.Book;
 
+import com.example.demo.Course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,14 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final RestTemplate restTemplate;
+    private final BookRepository bookRepository;
+    private final CourseService courseService;
 
     @Autowired
-    public BookService(RestTemplate restTemplate) {
+    public BookService(RestTemplate restTemplate, BookRepository bookRepository, CourseService courseService) {
         this.restTemplate = restTemplate;
+        this.bookRepository = bookRepository;
+        this.courseService = courseService;
     }
 
     @Value("${google.books.api.url}")
@@ -30,25 +35,31 @@ public class BookService {
             BookApiResponse body = response.getBody();
             if (body != null && body.getItems() != null) {
 
-                return mapToBooks(body.getItems());
+                List<Book> books = mapToBooks(body.getItems(),query);
+                bookRepository.saveAll(books);
+                return books;
             }
         }
         return null;
     }
 
-    private List<Book> mapToBooks(List<BookApiItem> items) {
+
+    private List<Book> mapToBooks(List<BookApiItem> items, String query) {
         return items.stream()
-                .map(this::mapToBook)
+                .map(item -> mapToBook(item,query))
                 .collect(Collectors.toList());
     }
 
-    private Book mapToBook(BookApiItem item) {
+
+    private Book mapToBook(BookApiItem item, String query) {
         Book book = new Book();
+        book.setId(item.getId());
         book.setTitle(item.getVolumeInfo().getTitle());
         book.setAuthors(item.getVolumeInfo().getAuthors());
         book.setDescription(item.getVolumeInfo().getDescription());
         book.setGenre(Arrays.toString(item.getVolumeInfo().getCategories().toArray()));
         book.setPublishedDate(item.getVolumeInfo().getPublishedDate());
+        book.setCourse(courseService.getCourseByName(query));
         return book;
     }
 }

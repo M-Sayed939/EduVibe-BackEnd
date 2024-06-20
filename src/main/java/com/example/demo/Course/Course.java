@@ -2,6 +2,9 @@ package com.example.demo.Course;
 
 import com.example.demo.Book.Book;
 import com.example.demo.StudyStrategy.StudyStrategy;
+import com.example.demo.appuser.AppUser;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,10 +19,17 @@ public class Course {
     private String name;
     private String description;
 
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-//    private List<Book> books;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<StudyStrategy> studyStrategys;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Book> books;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<StudyStrategy> studyStrategies;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser user;
 }
