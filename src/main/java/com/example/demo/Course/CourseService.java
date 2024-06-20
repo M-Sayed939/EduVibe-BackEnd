@@ -12,8 +12,11 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public Course getCourseByName(String name) {
+        return courseRepository.findByName(name);
+    }
+    public List<Course> getAllCourses(Long userId) {
+        return courseRepository.findByUserId(userId);
     }
 
     public Course getCourseById(Long id) {

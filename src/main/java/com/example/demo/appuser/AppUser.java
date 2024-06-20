@@ -1,5 +1,9 @@
 package com.example.demo.appuser;
 
+import com.example.demo.Course.Course;
+import com.example.demo.Notes.Note;
+import com.example.demo.Notifications.Notification;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -71,6 +76,9 @@ public class AppUser implements UserDetails {
     public String getUsername() {
         return username;
     }
+    public String getEmail() {
+        return email;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -99,6 +107,16 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+    @JsonManagedReference
+    @OneToMany
+    private List<Course> courses;
+    @JsonManagedReference
+    @OneToMany
+    private List<Notification> notifications;
+    @JsonManagedReference
+    @OneToMany
+    private List<Note> notes;
 
 //    @Override
 //    public String getUsername() {

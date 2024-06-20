@@ -18,10 +18,10 @@ public class UserAuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AppUser user) {
-        if (userService.authenticate(user.getUsername(), user.getPassword())) {
-            return new ResponseEntity<>("Login successful", HttpStatus.OK);
+        if (userService.authenticate(user.getEmail(), user.getPassword())) {
+            return new ResponseEntity<>(userService.generateToken(user), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
         }
     }
 }

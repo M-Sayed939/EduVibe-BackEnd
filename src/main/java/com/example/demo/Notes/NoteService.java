@@ -10,8 +10,8 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
-    public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+    public List<Note> getAllNotes(Long userId) {
+        return noteRepository.findByUserId(userId);
     }
 
     public Note getNoteById(Long id) {
