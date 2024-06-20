@@ -1,14 +1,13 @@
 package com.example.demo.Notes;
 
+import com.example.demo.appuser.AppUser;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -22,4 +21,8 @@ public class Note {
     private String title;
     private String content;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser user;
 }

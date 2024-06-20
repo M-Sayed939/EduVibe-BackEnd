@@ -13,9 +13,9 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @GetMapping
-    public ResponseEntity<List<Note>> getAllNotes() {
-        List<Note> notes = noteService.getAllNotes();
+    @GetMapping("u/{userId}")
+    public ResponseEntity<List<Note>> getAllNotes(@PathVariable Long userId) {
+        List<Note> notes = noteService.getAllNotes(userId);
         return new ResponseEntity<>(notes, HttpStatus.OK);
     }
 

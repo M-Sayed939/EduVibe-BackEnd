@@ -1,6 +1,7 @@
 package com.example.demo.StudyStrategy;
 
 import com.example.demo.Course.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,11 +16,13 @@ public class StudyStrategy {
     private Long id;
     private String name;
     private String description;
-    public StudyStrategy(String name, String description) {
-    this.name = name;
-    this.description = description;
-}
 
+    public StudyStrategy(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

@@ -1,7 +1,7 @@
 package com.example.demo.appuser;
 
-import com.example.demo.Registration.token.ConfirmationToken;
-import com.example.demo.Registration.token.ConfirmationTokenService;
+import com.example.demo.Registration.token.AccessToken;
+import com.example.demo.Registration.token.AccessTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -22,8 +23,8 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository
             appUserRepository;
     @Autowired
-    private final ConfirmationTokenService
-            confirmationTokenService;
+    private final AccessTokenService
+            accessTokenService;
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -43,12 +44,12 @@ public class AppUserService implements UserDetailsService {
 //                                String.format("user with username %s not found", username)));
 //    }
 
-    public boolean authenticate(String username, String password) {
-        AppUser user = appUserRepository.findByUsername(username).orElse(null);
+    public boolean authenticate(String email, String password) {
+        AppUser user = appUserRepository.findByEmail(email).orElse(null);
         return user != null && bCryptPasswordEncoder.matches(password, user.getPassword());
     }
 
-    public String signUpUser(AppUser appUser) {
+    public void signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
                 .findByEmail(appUser.getEmail())
                 .isPresent();
@@ -64,17 +65,20 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
+
+    }
+
+    public String generateToken(AppUser appUser) {
+        AppUser user = appUserRepository
+                .findByEmail(appUser.getEmail()).get();
         String token = UUID.randomUUID().toString();
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(
+        AccessToken accessToken = new AccessToken(
                 token,
-                java.time.LocalDateTime.now(),
-                java.time.LocalDateTime.now().plusMinutes(15),
-                appUser
+                LocalDateTime.now(),
+                user,
+                user.getAppUserRole()
         );
-        confirmationTokenService.saveConfirmationToken(
-                confirmationToken);
-
+        accessTokenService.saveAccessToken(accessToken);
         return token;
     }
 

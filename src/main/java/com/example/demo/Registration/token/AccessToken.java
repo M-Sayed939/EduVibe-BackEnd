@@ -1,6 +1,8 @@
 package com.example.demo.Registration.token;
 
 import com.example.demo.appuser.AppUser;
+import com.example.demo.appuser.AppUserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,16 +14,16 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class ConfirmationToken {
+public class AccessToken {
 
     @SequenceGenerator(
-            name = "confirmation_token_sequence",
-            sequenceName = "confirmation_token_sequence",
+            name = "access_token_sequence",
+            sequenceName = "access_token_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
-            generator = "confirmation_token_sequence",
+            generator = "access_token_sequence",
             strategy = GenerationType.SEQUENCE
     )
     private Long id;
@@ -30,10 +32,12 @@ public class ConfirmationToken {
     private String token;
     @Column(nullable = false)
     private LocalDateTime createdAt;
-    @Column(nullable = false)
-    private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
+    private AppUserRole role;
+//    @Column(nullable = false)
+//    private LocalDateTime expiresAt;
 
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -41,13 +45,12 @@ public class ConfirmationToken {
     )
     private AppUser appUser;
 
-    public ConfirmationToken(String token,
-                             LocalDateTime createdAt,
-                             LocalDateTime expiresAt,
-                             AppUser appUser) {
+    public AccessToken(String token,
+                       LocalDateTime createdAt,
+                       AppUser appUser, AppUserRole appUserRole) {
         this.token = token;
         this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
         this.appUser = appUser;
+        this.role = appUserRole;
     }
 }

@@ -16,11 +16,12 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<String> register(@Validated @RequestBody RegistrationRequest request) {
-        return ResponseEntity.ok(registrationService.register(request));
+        registrationService.register(request);
+        return ResponseEntity.ok("user registered successfully");
     }
 
-    @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
-    }
+//    @GetMapping(path = "confirm")
+//    public String confirm(@RequestParam("token") String token) {
+//        return registrationService.confirmToken(token);
+//    }
 }
