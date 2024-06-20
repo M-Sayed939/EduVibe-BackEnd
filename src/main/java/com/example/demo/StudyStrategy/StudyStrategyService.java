@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class  StudyStrategyService {
+public class StudyStrategyService {
     @Autowired
     private StudyStrategyRepository studyStrategyRepository;
+
     public StudyStrategy addStudyStrategy(StudyStrategy studyStrategy) {
-    return studyStrategyRepository.save(studyStrategy);
-}
+        return studyStrategyRepository.save(studyStrategy);
+    }
+
     public List<StudyStrategy> getStudyStrategies() {
         return studyStrategyRepository.findAll();
     }

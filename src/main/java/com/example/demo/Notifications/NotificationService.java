@@ -12,15 +12,15 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public List<Notification> getAllNotifications() {
-        return notificationRepository.findAll();
+    public List<Notification> getAllNotifications(Long userId) {
+        return notificationRepository.findByUserId(userId);
     }
 
-    public List<Notification> getUnreadNotifications() {
-        return notificationRepository.findByRead(false);
+    public List<Notification> getUnreadNotifications(Long userId) {
+        return notificationRepository.findByUserIdAndRead(userId, false);
     }
-    public List<Notification> getReadNotifications() {
-        return notificationRepository.findByRead(true);
+    public List<Notification> getReadNotifications(Long userId) {
+        return notificationRepository.findByUserIdAndRead(userId,true);
     }
 
     public void markAsRead(Long id) {
@@ -32,5 +32,13 @@ public class NotificationService {
         } else {
             throw new RuntimeException("Notification not found");
         }
+    }
+
+//    public void createNotification(Notification notification) {
+//        notificationRepository.save(notification);
+//    }
+
+    public Notification saveOrUpdateNotification(Notification notification) {
+        return notificationRepository.save(notification);
     }
 }

@@ -1,11 +1,10 @@
 package com.example.demo.Notifications;
 
+import com.example.demo.Notes.Note;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/notification")
@@ -14,23 +13,29 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    @GetMapping
-    public ResponseEntity<?> getAllNotifications() {
-        return ResponseEntity.ok(notificationService.getAllNotifications());
+    @PostMapping
+    public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) {
+        Notification createdNote = notificationService.saveOrUpdateNotification(notification);
+        return new ResponseEntity<>(createdNote, HttpStatus.CREATED);
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getAllNotifications(@PathVariable Long userId) {
+
+        return ResponseEntity.ok(notificationService.getAllNotifications(userId));
     }
 
-    @GetMapping("/unread")
-    public ResponseEntity<?> getUnreadNotifications() {
-        return ResponseEntity.ok(notificationService.getUnreadNotifications());
+    @GetMapping("/{userId}/unread")
+    public ResponseEntity<?> getUnreadNotifications(@PathVariable Long userId) {
+        return ResponseEntity.ok(notificationService.getUnreadNotifications(userId));
     }
 
-    @GetMapping("/read")
-    public ResponseEntity<?> getReadNotifications() {
-        return ResponseEntity.ok(notificationService.getReadNotifications());
+    @GetMapping("/{userId}/read")
+    public ResponseEntity<?> getReadNotifications(@PathVariable Long userId) {
+        return ResponseEntity.ok(notificationService.getReadNotifications(userId));
     }
 
     @PostMapping("/{id}/mark-as-read")
-    public ResponseEntity<?> markAsRead(Long id) {
+    public ResponseEntity<?> markAsRead(@PathVariable Long id) {
         notificationService.markAsRead(id);
         return ResponseEntity.ok().build();
     }

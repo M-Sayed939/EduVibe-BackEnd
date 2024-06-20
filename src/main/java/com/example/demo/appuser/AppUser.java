@@ -39,14 +39,17 @@ public class AppUser implements UserDetails {
     private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+    private String username;
 
     public AppUser(String firstName,
                    String lastName,
+                   String username,
                    String email,
                    String password,
                    AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
@@ -66,7 +69,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     public String getFirstName() {
@@ -96,4 +99,9 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+//    @Override
+//    public String getUsername() {
+//        return username;
+//    }
 }

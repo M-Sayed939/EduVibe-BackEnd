@@ -3,6 +3,7 @@ package com.example.demo.appuser;
 import com.example.demo.Registration.token.ConfirmationToken;
 import com.example.demo.Registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,12 +18,13 @@ public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG =
             "user with email %s not found";
-
+    @Autowired
     private final AppUserRepository
             appUserRepository;
+    @Autowired
     private final ConfirmationTokenService
             confirmationTokenService;
-
+    @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -33,16 +35,19 @@ public class AppUserService implements UserDetailsService {
                         new UsernameNotFoundException(
                                 String.format("user with email %s not found", email)));
     }
-    public UserDetails findByUsername(String username) throws UsernameNotFoundException{
-            return appUserRepository.findByUsername(username)
-                    .orElseThrow(() ->
-                            new UsernameNotFoundException(
-                                    String.format("user with username %s not found", username)));
-        }
-    public boolean authenticate(String username, String password){
+
+//    public UserDetails findByUsername(String username) throws UsernameNotFoundException {
+//        return appUserRepository.findByUsername(username)
+//                .orElseThrow(() ->
+//                        new UsernameNotFoundException(
+//                                String.format("user with username %s not found", username)));
+//    }
+
+    public boolean authenticate(String username, String password) {
         AppUser user = appUserRepository.findByUsername(username).orElse(null);
         return user != null && bCryptPasswordEncoder.matches(password, user.getPassword());
     }
+
     public String signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
                 .findByEmail(appUser.getEmail())
