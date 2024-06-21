@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/user")
@@ -27,4 +28,9 @@ public class UserController {
         List<Note> notes = userService.getAllNotes(userId);
         return new ResponseEntity<>(notes, HttpStatus.OK);
     }
+//    @GetMapping("{userId}/profile")
+//    public ResponseEntity<AppUser> getUserProfile(@PathVariable Long userId) {
+//        AppUser user = userService.loadUserById(userId);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
 }

@@ -109,13 +109,13 @@ public class AppUser implements UserDetails {
     }
 
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Course> courses;
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Notification> notifications;
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Note> notes;
 
 //    @Override

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -71,7 +72,7 @@ public class AppUserService implements UserDetailsService {
 
     }
 
-    public String generateToken(AppUser appUser) {
+    public UserDTO login(AppUser appUser) {
         AppUser user = appUserRepository
                 .findByEmail(appUser.getEmail()).get();
         String token = UUID.randomUUID().toString();
@@ -82,7 +83,14 @@ public class AppUserService implements UserDetailsService {
                 user.getAppUserRole()
         );
         accessTokenService.saveAccessToken(accessToken);
-        return token;
+        return new UserDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUsername(),
+                user.getEmail(),
+                token
+        );
     }
 
     public int enableAppUser(String email) {
@@ -95,5 +103,11 @@ public class AppUserService implements UserDetailsService {
 
     public List<Note> getAllNotes(Long userId) {
         return appUserRepository.findById(userId).map(AppUser::getNotes).orElse(List.of());
+    }
+
+    public AppUser loadUserById(Long userId) {
+        return appUserRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        String.format("User with id %s not found", userId)));
     }
 }

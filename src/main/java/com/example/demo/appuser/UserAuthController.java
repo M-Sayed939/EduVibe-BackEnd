@@ -17,11 +17,11 @@ public class UserAuthController {
     private AppUserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AppUser user) {
+    public ResponseEntity<UserDTO> login(@RequestBody AppUser user) {
         if (userService.authenticate(user.getEmail(), user.getPassword())) {
-            return new ResponseEntity<>(userService.generateToken(user), HttpStatus.OK);
+            return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }
