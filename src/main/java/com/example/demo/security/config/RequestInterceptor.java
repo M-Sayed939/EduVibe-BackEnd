@@ -23,7 +23,7 @@ public class RequestInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         //* Business logic just when the request is received and intercepted by this interceptor before reaching the controller
-            if (request.getRequestURI().equals("/api/login") || request.getRequestURI().equals("/api/v1/registration")) {
+            if (request.getRequestURI().equals("/api/login") || request.getRequestURI().equals("/api/registration")) {
                 return true;
             }
             String token = request.getHeader("authorization");

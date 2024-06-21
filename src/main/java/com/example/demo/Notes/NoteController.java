@@ -13,11 +13,7 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @GetMapping("u/{userId}")
-    public ResponseEntity<List<Note>> getAllNotes(@PathVariable Long userId) {
-        List<Note> notes = noteService.getAllNotes(userId);
-        return new ResponseEntity<>(notes, HttpStatus.OK);
-    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Note> getNoteById(@PathVariable Long id) {

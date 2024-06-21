@@ -15,8 +15,8 @@ public class CourseService {
     public Course getCourseByName(String name) {
         return courseRepository.findByName(name);
     }
-    public List<Course> getAllCourses(Long userId) {
-        return courseRepository.findByUserId(userId);
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
     }
 
     public Course getCourseById(Long id) {

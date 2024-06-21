@@ -13,7 +13,7 @@ import javax.validation.constraints.Email;
 @EqualsAndHashCode
 @ToString
 public class RegistrationRequest {
-    private final String firstName;
+    private final String firstname;
     private final String lastname;
     private final String username;
     @Email

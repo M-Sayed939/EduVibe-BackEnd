@@ -13,9 +13,9 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("u/{userId}")
-    public ResponseEntity<List<Course>> getAllCourses(@PathVariable Long userId) {
-        List<Course> courses = courseService.getAllCourses(userId);
+    @GetMapping
+    public ResponseEntity<List<Course>> getAllCourses() {
+        List<Course> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
     @PutMapping("/{id}")

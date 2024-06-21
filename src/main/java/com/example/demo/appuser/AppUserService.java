@@ -1,5 +1,7 @@
 package com.example.demo.appuser;
 
+import com.example.demo.Course.Course;
+import com.example.demo.Notes.Note;
 import com.example.demo.Registration.token.AccessToken;
 import com.example.demo.Registration.token.AccessTokenService;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -84,5 +87,13 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public List<Course> getAllCourses(Long userId) {
+        return appUserRepository.findById(userId).map(AppUser::getCourses).orElse(List.of());
+    }
+
+    public List<Note> getAllNotes(Long userId) {
+        return appUserRepository.findById(userId).map(AppUser::getNotes).orElse(List.of());
     }
 }
