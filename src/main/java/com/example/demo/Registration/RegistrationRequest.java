@@ -19,6 +19,9 @@ public class RegistrationRequest {
     @Email
     private final String email;
     private final String password;
+    private final String phone;
+    private final String university;
+    private final String country;
     @Nullable
     private final String role;
 

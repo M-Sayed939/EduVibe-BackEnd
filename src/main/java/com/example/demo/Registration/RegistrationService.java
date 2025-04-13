@@ -40,6 +40,9 @@ public class RegistrationService {
                         request.getUsername(),
                         request.getEmail(),
                         request.getPassword(),
+                        request.getPhone(),
+                        request.getUniversity(),
+                        request.getCountry(),
                         request.getRole()==null?AppUserRole.USER:AppUserRole.valueOf(request.getRole())
 
                 )
